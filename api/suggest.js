@@ -21,7 +21,8 @@ module.exports = async function(req, res){
     }
     catch(err){
         await cassandraHelper.updateRedis(req.params.query);
-        res.json(await redisHelper.fetchSuggestions(req.params.query));
+        // res.json(await redisHelper.fetchSuggestions(req.params.query));
+        res.json([]);
     }
 
     
