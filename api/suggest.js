@@ -8,7 +8,8 @@ module.exports = function(req, res){
 			}
 		},
 		err => {
-			console.log(err);
+            console.log(err);
+            res.json([]);
 		}
 	);
 };
