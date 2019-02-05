@@ -5,7 +5,6 @@ var port = process.env.PORT || 8080;
 var apiRouter = require('./api/index');
 
 // var db_config = require('./_config/database');
-//const cassandraClient = new cassandra.Client({ contactPoints: ['127.0.0.1'], keyspace: 'suggestify' });
 
 app.get('/', function (req, res) {
 	res.send('Hello! The API is at http://localhost:' + port + '/api');
