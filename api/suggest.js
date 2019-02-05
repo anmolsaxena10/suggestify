@@ -17,12 +17,13 @@ module.exports = async function(req, res){
     // );
     
     try{
-        res.json(await redisHelper.fetchSuggestions(req.params.query));
+        var suggestions = await redisHelper.fetchSuggestions(req.params.query);
+        if(suggestions.length != 0) res.json(suggestions);
+        else throw('not found');
     }
     catch(err){
         await cassandraHelper.updateRedis(req.params.query);
-        // res.json(await redisHelper.fetchSuggestions(req.params.query));
-        res.json([]);
+        res.json(await redisHelper.fetchSuggestions(req.params.query));
     }
 
     
