@@ -3,7 +3,14 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var port = process.env.PORT || 8080;
 var apiRouter = require('./api/index');
+var mongoCon = require('./lib/mongo').Connection;
+mongoCon.connectToMongo();
 
+var redisCon = require('./lib/redis').Connection;
+(async () => {
+	await redisCon.connectToRedis();
+})();
+// redisCon.client.zrange(['h', 0, -1], (err, ans) => {console.log(ans)});
 // var db_config = require('./_config/database');
 
 app.get('/', function (req, res) {
