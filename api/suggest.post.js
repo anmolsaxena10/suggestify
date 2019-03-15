@@ -10,10 +10,9 @@ module.exports = async function(req, res){
         var prefixes =  utils.getPrefixes(suggestion);
         await redisHelper.insertPrefix(req.tenant, prefixes, suggestion);
         allPrefixes = [...allPrefixes, ...prefixes];
-        console.log(prefixes);
     }
 
-    await mongoHelper.persistPrefixes(allPrefixes, req.tenant);
+    mongoHelper.persistPrefixes(allPrefixes, req.tenant);
 
-    return res.status(200);
+    return res.sendStatus(200);
 };
