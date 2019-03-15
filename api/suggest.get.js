@@ -1,13 +1,16 @@
 var redisHelper = require('../lib/redis_helper');
 var mongoHelper = require('../lib/mongo_helper');
-
+var utils = require('../lib/utils');
 var redisCon = require('../lib/redis').Connection;
 
 module.exports = async function(req, res){
-    var suggestions = await redisHelper.fetchSuggestions(req.params.query);
+    var query = utils.mergeTenantQuery(req.tenant.tenant_id, req.params.query);
+    console.log(query);
+    var suggestions = await redisHelper.fetchSuggestions(query);
     if(suggestions.length != 0) res.json(suggestions);
     else{
-        await mongoHelper.updateRedis(req.params.query);
-        res.json(await redisHelper.fetchSuggestions(req.params.query));
+        console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+        await mongoHelper.updateRedis(req.tenant, req.params.query);
+        res.json(await redisHelper.fetchSuggestions(query));
     }
 };

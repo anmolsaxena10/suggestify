@@ -9,8 +9,8 @@ var middleware = require('../lib/middleware');
 var router = express.Router();
 
 router.get('/suggest/:query', middleware.authenticate, sugGet);
-router.post('/suggest/', sugPost);
-router.delete('/suggest/', sugDelete);
-router.put('/suggest/', sugPut);
+router.post('/suggest/', middleware.authenticate, sugPost);
+router.delete('/suggest/', middleware.authenticate, sugDelete);
+router.put('/suggest/', middleware.authenticate, sugPut);
 
 module.exports = router;
