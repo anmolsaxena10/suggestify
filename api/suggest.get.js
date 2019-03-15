@@ -7,9 +7,10 @@ module.exports = async function(req, res){
     var query = utils.mergeTenantQuery(req.tenant.tenant_id, req.params.query);
 
     var suggestions = await redisHelper.fetchSuggestions(query);
-    if(suggestions.length != 0) res.json(suggestions);
-    else{
+    if(suggestions.length === 0){
         await mongoHelper.updateRedis(req.tenant, req.params.query);
-        res.json(await redisHelper.fetchSuggestions(query));
+        suggestins = await redisHelper.fetchSuggestions(query);
     }
+    suggestions = utils.formatSuggestions(suggestions);
+    res.json(suggestions);
 };
