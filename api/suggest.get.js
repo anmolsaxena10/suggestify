@@ -9,7 +9,7 @@ module.exports = async function(req, res){
     var suggestions = await redisHelper.fetchSuggestions(query);
     if(suggestions.length === 0){
         await mongoHelper.updateRedis(req.tenant, req.params.query);
-        suggestins = await redisHelper.fetchSuggestions(query);
+        suggestions = await redisHelper.fetchSuggestions(query);
     }
     suggestions = utils.formatSuggestions(suggestions);
     res.json(suggestions);
