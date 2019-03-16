@@ -7,8 +7,8 @@ var sugPut = require('./suggest.put');
 var middleware = require('../lib/middleware');
 
 var router = express.Router();
-
-router.get('/suggest/:query', middleware.authenticate, sugGet);
+router.use(middleware.authenticate);
+router.get('/suggest/:query', sugGet);
 router.post('/suggest/', middleware.authenticate, sugPost);
 router.delete('/suggest/', middleware.authenticate, sugDelete);
 router.put('/suggest/', middleware.authenticate, sugPut);
